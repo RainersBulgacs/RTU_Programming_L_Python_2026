@@ -58,29 +58,64 @@ Examples (these are also used to check your work):
 def count_characters(text: str) -> int:
     """Count characters that are not whitespace."""
     # TODO: implement
-    raise NotImplementedError("count_characters() is not implemented yet")
+    count = 0
+    for char in text:
+        if char != ' ':
+            count += 1
+    return count
+    # raise NotImplementedError("count_characters() is not implemented yet")
 
 
 def count_words(text: str) -> int:
     """Count number of whitespace-separated words."""
     # TODO: implement
-    raise NotImplementedError("count_words() is not implemented yet")
+    return len(text.split())
+    # raise NotImplementedError("count_words() is not implemented yet")
 
 
 def extract_numbers(text: str) -> list[int]:
     """Return a list of the integers found in text, in order."""
     # TODO: implement
-    raise NotImplementedError("extract_numbers() is not implemented yet")
+    extracted = []
+    for elem in text.split():
+        elem = elem.rstrip(".,!?;:")
+        if elem.lstrip("-").isdigit():
+                try:
+                    extracted.append(int(elem))
+                except ValueError:
+                    pass
+    return extracted
+    # raise NotImplementedError("extract_numbers() is not implemented yet")
 
 
 def analyze_text(text: str) -> dict:
     """Return a dict with characters, words, numbers, sum and average."""
     # TODO: call the helper functions and compute sum and average
-    raise NotImplementedError("analyze_text() is not implemented yet")
+    summ = sum(extract_numbers(text))
+    if (extract_numbers(text) == 0):
+        avg = 0.0
+    else:
+        avg = summ / len(extract_numbers(text))
+    return {
+        "characters": count_characters(text),
+        "words": count_words(text),
+        "numbers": extract_numbers(text),
+        "sum": summ,
+        "average": avg,
+    }
+
+    # raise NotImplementedError("analyze_text() is not implemented yet")
 
 
 if __name__ == "__main__":
     # Keep all input() calls inside this block, otherwise the autograder
     # cannot import your file.
     # TODO: read input, call analyze_text(), and print results
-    pass
+    text = input("Enter text: ")
+    output = analyze_text(text)
+    print(f"Characters (no spaces): {output['characters']}")
+    print(f"Words: {output['words']}")
+    print(f"Numbers: {output['numbers']}")
+    print(f"Sum: {output['sum']}")
+    print(f"Average: {output['average']:.2f}")
+    # pass
